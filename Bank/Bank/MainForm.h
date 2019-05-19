@@ -33,7 +33,7 @@ namespace WindowsForms {
 			}
 			catch (Exception^ex) {
 				
-				tbChat->Text += ex->Message + "\r\n";//если не вошли то в чат выводим ощибку
+				tbChat->Text += ex->Message + "\r\n";//если не вошли то в чат выводим ошибку
 				c = nullptr;
 			}
 		}

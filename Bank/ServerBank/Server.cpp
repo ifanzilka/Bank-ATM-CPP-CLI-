@@ -5,7 +5,7 @@ void ServerBank::Parse(String ^ str)
 {
 	
 		array<String^>^ sep = { ":" };
-		array<String^>^ parts = str->Split(sep, 4, StringSplitOptions::None);//разбираем полученную строку на две строки и закидываем в массив (разделяем с ':')hh
+		array<String^>^ parts = str->Split(sep, 4, StringSplitOptions::None);//СЂР°Р·Р±РёСЂР°РµРј РїРѕР»СѓС‡РµРЅРЅСѓСЋ СЃС‚СЂРѕРєСѓ РЅР° РґРІРµ СЃС‚СЂРѕРєРё Рё Р·Р°РєРёРґС‹РІР°РµРј РІ РјР°СЃСЃРёРІ (СЂР°Р·РґРµР»СЏРµРј СЃ ':')hh
 		
 		BankClient^ client = gcnew BankClient;
 		client->Name = parts[0];
@@ -44,14 +44,14 @@ ServerBank::ServerBank()
 	Socket^ sSocket = gcnew Socket(
 
 		SocketType::Stream,
-		ProtocolType::Tcp//протокол соединения
+		ProtocolType::Tcp//РїСЂРѕС‚РѕРєРѕР» СЃРѕРµРґРёРЅРµРЅРёСЏ
 	);
 	try
 	{	
 		//SortedList<String^, BankClient^>^NumberCard = gcnew SortedList<String^, BankClient^>;
 		 Accounts = gcnew List<BankClient^>;
 		String^ fileName = "ServerBank.txt";
-		Console::WriteLine("Считываем данные клиентов с {0}...", fileName);
+		Console::WriteLine("РЎС‡РёС‚С‹РІР°РµРј РґР°РЅРЅС‹Рµ РєР»РёРµРЅС‚РѕРІ СЃ {0}...", fileName);
 		StreamReader^ din = File::OpenText(fileName);
 
 		String^ str;
@@ -71,16 +71,16 @@ ServerBank::ServerBank()
 		this->Clients = Clients;
 		sSocket->Bind(
 			gcnew IPEndPoint(
-				Dns::GetHostEntry(host)->AddressList[0],//первый ip
+				Dns::GetHostEntry(host)->AddressList[0],//РїРµСЂРІС‹Р№ ip
 				port
 			));
 		Console::WriteLine("Starting server");
-		sSocket->Listen(10);//максимум одновременных подключений
+		sSocket->Listen(10);//РјР°РєСЃРёРјСѓРј РѕРґРЅРѕРІСЂРµРјРµРЅРЅС‹С… РїРѕРґРєР»СЋС‡РµРЅРёР№
 		Console::WriteLine("Waiting for connection...");
 		while (true)
 		{
 
-			Socket^cSocket = sSocket->Accept();//ждем полкючения и возвращаем клиентский сокет
+			Socket^cSocket = sSocket->Accept();//Р¶РґРµРј РїРѕР»РєСЋС‡РµРЅРёСЏ Рё РІРѕР·РІСЂР°С‰Р°РµРј РєР»РёРµРЅС‚СЃРєРёР№ СЃРѕРєРµС‚
 			gcnew ClientModel(cSocket,Clients,Accounts);
 			Console::WriteLine("There is a connection!!!");
 
@@ -90,7 +90,7 @@ ServerBank::ServerBank()
 	}
 	catch (Exception^ ex) 
 	{
-		Console::WriteLine("Что-то пошло не так... " + ex->Message);
+		Console::WriteLine("Р§С‚Рѕ-С‚Рѕ РїРѕС€Р»Рѕ РЅРµ С‚Р°Рє... " + ex->Message);
 		Console::ReadLine();
 	}
 	
@@ -111,7 +111,7 @@ ClientModel::ClientModel(Socket ^ s, List<ClientModel^>^ Clients, List<BankClien
 	this->Accounts = Accounts;
 	this->Clients = Clients;
 	Clients->Add(this);
-	ThreadStart^ ts = gcnew ThreadStart(this, &ClientModel::Communicate);//выделяем поток для общения
+	ThreadStart^ ts = gcnew ThreadStart(this, &ClientModel::Communicate);//РІС‹РґРµР»СЏРµРј РїРѕС‚РѕРє РґР»СЏ РѕР±С‰РµРЅРёСЏ
 	Thread^ t = gcnew Thread(ts);
 	active = true;
 	t->Start();
@@ -157,18 +157,18 @@ void ClientModel::ParseData(String ^ req)
 		{
 			YourAccount->Balance -= coin;
 			
-			SendData("MESSAGE:" + "Операция успешно выполнена!\n Текущий остаток:"+Convert::ToString(YourAccount->Balance));
+			SendData("MESSAGE:" + "РћРїРµСЂР°С†РёСЏ СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅР°!\n РўРµРєСѓС‰РёР№ РѕСЃС‚Р°С‚РѕРє:"+Convert::ToString(YourAccount->Balance));
 		}
 		else
 		{
-			SendData("MESSAGE:" + "Недостаточно средств на счете!\r\n");
+			SendData("MESSAGE:" + "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚Рµ!\r\n");
 		}
 	}
 	else if (parts[0]->ToUpper()->Equals("INSERT"))
 	{
 		Double coin = Convert::ToDouble(parts[1]);
 		YourAccount->Balance += coin;
-		SendData("MESSAGE:" + "Операция успешно выполнена!\n Текущий остаток:" + Convert::ToString(YourAccount->Balance)+"\r\n");
+		SendData("MESSAGE:" + "РћРїРµСЂР°С†РёСЏ СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅР°!\n РўРµРєСѓС‰РёР№ РѕСЃС‚Р°С‚РѕРє:" + Convert::ToString(YourAccount->Balance)+"\r\n");
 	}
 	else if (parts[0]->ToUpper()->Equals("SHUTDOWN"))
 	{
@@ -185,7 +185,7 @@ void ClientModel::ParseData(String ^ req)
 			}
 			else
 			{
-				SendData("MESSAGE:" + "Недостаточно средств на счете!\r\n");
+				SendData("MESSAGE:" + "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚Рµ!\r\n");
 			}
 		}catch(Exception^ex)
 		{
@@ -198,7 +198,7 @@ void ClientModel::ParseData(String ^ req)
 void ClientModel::SendMessage(String ^ msg)
 {
 
-	for each(ClientModel^ c in Clients)//отправлям всем сокетам из списка
+	for each(ClientModel^ c in Clients)//РѕС‚РїСЂР°РІР»СЏРј РІСЃРµРј СЃРѕРєРµС‚Р°Рј РёР· СЃРїРёСЃРєР°
 	{
 		c->SendData("Message:" + msg);
 	}
@@ -208,11 +208,11 @@ void ClientModel::SendMessage(String ^ msg)
 void ClientModel::SendData(String ^ data)
 {
 	try {
-		if (!socket || !socket->Connected) throw gcnew Exception();//проверяем подключен ли клиент
-		if (!data || data->Trim()->Equals("")) data = "\0";//проверям пустая строка или нет
-		array<Byte>^ b = Encoding::UTF8->GetBytes(data);//строку в байты
+		if (!socket || !socket->Connected) throw gcnew Exception();//РїСЂРѕРІРµСЂСЏРµРј РїРѕРґРєР»СЋС‡РµРЅ Р»Рё РєР»РёРµРЅС‚
+		if (!data || data->Trim()->Equals("")) data = "\0";//РїСЂРѕРІРµСЂСЏРј РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР° РёР»Рё РЅРµС‚
+		array<Byte>^ b = Encoding::UTF8->GetBytes(data);//СЃС‚СЂРѕРєСѓ РІ Р±Р°Р№С‚С‹
 		Console::WriteLine("Sending: {0}", data);
-		socket->Send(b);//отпраыляем этому сокету
+		socket->Send(b);//РѕС‚РїСЂР°С‹Р»СЏРµРј СЌС‚РѕРјСѓ СЃРѕРєРµС‚Сѓ
 		Console::WriteLine("Sent");
 	}
 	catch (Exception^ ex)
@@ -226,9 +226,9 @@ void ClientModel::SendData(String ^ data)
 void ClientModel::Communicate()
 {
 	if (!socket) return;
-	Console::WriteLine("Starting communication");//начали общение с клиентом
+	Console::WriteLine("Starting communication");//РЅР°С‡Р°Р»Рё РѕР±С‰РµРЅРёРµ СЃ РєР»РёРµРЅС‚РѕРј
 	while (active) {
-		Console::WriteLine("Receiving request...");//ждем команды от клиента
+		Console::WriteLine("Receiving request...");//Р¶РґРµРј РєРѕРјР°РЅРґС‹ РѕС‚ РєР»РёРµРЅС‚Р°
 		auto req = ReceiveData();
 		Console::WriteLine(req);
 		ParseData(req);
@@ -250,14 +250,14 @@ void ClientModel::FindClient(String ^ Number, String ^ Pin)
 				Find = true;
 				Console::WriteLine("USER {0} Connected in account", var->Name);
 				SendData("ENTERS:OK");
-				SendData("MESSAGE:" + "Здравствуйте, " + var->Name + "\n");
+				SendData("MESSAGE:" + "Р—РґСЂР°РІСЃС‚РІСѓР№С‚Рµ, " + var->Name + "\n");
 				break;
 				
 			}
 			else
 			{ 
 				Console::WriteLine("This account is already connected"); 
-				SendData("MESSAGE:Под данынм аккаунтом уже вошли!");
+				SendData("MESSAGE:РџРѕРґ РґР°РЅС‹РЅРј Р°РєРєР°СѓРЅС‚РѕРј СѓР¶Рµ РІРѕС€Р»Рё!");
 				break;
 			}
 		}
@@ -302,16 +302,16 @@ void ClientModel::TransferMoney(String ^ Card, Double coin)
 			{
 				if(var->YourAccount->NumberCard==Card)
 				{
-					var->SendData("MESSAGE:Получено:" + Convert::ToString(coin) + " от "+YourAccount->Name);
+					var->SendData("MESSAGE:РџРѕР»СѓС‡РµРЅРѕ:" + Convert::ToString(coin) + " РѕС‚ "+YourAccount->Name);
 				}
 			}
-			SendData("MESSAGE:Перевод успешно выполнен!");
+			SendData("MESSAGE:РџРµСЂРµРІРѕРґ СѓСЃРїРµС€РЅРѕ РІС‹РїРѕР»РЅРµРЅ!");
 		}
 		
 	}
 	if (!Find) 
 	{
-		SendData("MESSAGE:Перевод не выполнен (возможно неверно введена карта)");
+		SendData("MESSAGE:РџРµСЂРµРІРѕРґ РЅРµ РІС‹РїРѕР»РЅРµРЅ (РІРѕР·РјРѕР¶РЅРѕ РЅРµРІРµСЂРЅРѕ РІРІРµРґРµРЅР° РєР°СЂС‚Р°)");
 	}
 
 }
@@ -324,9 +324,9 @@ String ^ ClientModel::ReceiveData()
 		if (!socket || !socket->Connected) throw gcnew Exception();
 		auto b = gcnew array<Byte>(65536);
 
-		int bc = socket->Receive(b, 0, 65535, SocketFlags::None);//байты в переменную b
-		res = Encoding::UTF8->GetString(b, 0, bc);//переводим строку в байты
-		Console::WriteLine("Request: {0}", res);//пишем полученное сообщение в командной строке
+		int bc = socket->Receive(b, 0, 65535, SocketFlags::None);//Р±Р°Р№С‚С‹ РІ РїРµСЂРµРјРµРЅРЅСѓСЋ b
+		res = Encoding::UTF8->GetString(b, 0, bc);//РїРµСЂРµРІРѕРґРёРј СЃС‚СЂРѕРєСѓ РІ Р±Р°Р№С‚С‹
+		Console::WriteLine("Request: {0}", res);//РїРёС€РµРј РїРѕР»СѓС‡РµРЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РІ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРµ
 		return res;
 	}
 	catch (Exception^ ex) {

@@ -1,0 +1,5 @@
+﻿  Server.cpp
+c:\users\fanzi\source\repos\bank\serverbank\server.cpp(217): warning C4101: ex: неиспользованная локальная переменная
+c:\users\fanzi\source\repos\bank\serverbank\server.cpp(331): warning C4101: ex: неиспользованная локальная переменная
+  Server.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
+  ServerBank.vcxproj -> C:\Users\fanzi\source\repos\Bank\Debug\ServerBank.exe

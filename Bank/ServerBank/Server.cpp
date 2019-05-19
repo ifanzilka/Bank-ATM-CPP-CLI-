@@ -5,7 +5,7 @@ void ServerBank::Parse(String ^ str)
 {
 	
 		array<String^>^ sep = { ":" };
-		array<String^>^ parts = str->Split(sep, 4, StringSplitOptions::None);//разбираем полученную строку на две строки и закидываем в массив (разделяем с ':')
+		array<String^>^ parts = str->Split(sep, 4, StringSplitOptions::None);//разбираем полученную строку на две строки и закидываем в массив (разделяем с ':')hh
 		
 		BankClient^ client = gcnew BankClient;
 		client->Name = parts[0];

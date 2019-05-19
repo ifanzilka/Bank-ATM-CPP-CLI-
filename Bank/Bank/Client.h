@@ -6,29 +6,29 @@ using namespace Sockets;
 using namespace Threading;
 using namespace Collections::Generic;
 
-delegate void LoginHandler(bool data);//делегат хранит сссылку на метод
+delegate void LoginHandler(bool data);//РґРµР»РµРіР°С‚ С…СЂР°РЅРёС‚ СЃСЃСЃС‹Р»РєСѓ РЅР° РјРµС‚РѕРґ
 delegate void MessageHandler( String^ msg);
 ref class Client
 {
 	String^ serverHost;
 	int port = 5555;
-	Socket^ socket;//подключение
+	Socket^ socket;//РїРѕРґРєР»СЋС‡РµРЅРёРµ
 	bool active = false;
 	void SendData(String^dat);
-	void Communicate();//обзение
+	void Communicate();//РѕР±Р·РµРЅРёРµ
 	bool Enter = false;
-	void ParseCommand(String^ req);//разютраем строку
-	String^ ReceiveData();//получаем из байтов строку
+	void ParseCommand(String^ req);//СЂР°Р·СЋС‚СЂР°РµРј СЃС‚СЂРѕРєСѓ
+	String^ ReceiveData();//РїРѕР»СѓС‡Р°РµРј РёР· Р±Р°Р№С‚РѕРІ СЃС‚СЂРѕРєСѓ
 public:
-	event MessageHandler^ OnMessageReceived;//событие получения сообщения
-	event LoginHandler^ OnEnterResult;//событие результат входа
-	Client(String^ serverHost);//конструктор
-	void Enters(String^Number, String^Pin);//попытка входа с данным логином и паролем
-	void Remove(String^s);//снимает со счета
-	void Insert(String^s);//пополняем счет
+	event MessageHandler^ OnMessageReceived;//СЃРѕР±С‹С‚РёРµ РїРѕР»СѓС‡РµРЅРёСЏ СЃРѕРѕР±С‰РµРЅРёСЏ
+	event LoginHandler^ OnEnterResult;//СЃРѕР±С‹С‚РёРµ СЂРµР·СѓР»СЊС‚Р°С‚ РІС…РѕРґР°
+	Client(String^ serverHost);//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+	void Enters(String^Number, String^Pin);//РїРѕРїС‹С‚РєР° РІС…РѕРґР° СЃ РґР°РЅРЅС‹Рј Р»РѕРіРёРЅРѕРј Рё РїР°СЂРѕР»РµРј
+	void Remove(String^s);//СЃРЅРёРјР°РµС‚ СЃРѕ СЃС‡РµС‚Р°
+	void Insert(String^s);//РїРѕРїРѕР»РЅСЏРµРј СЃС‡РµС‚
 	void SendMessage(String^ message);
 	void Transfer(String^NumberCard, String^Money);
-	void Balance();//отпраялем запрос на получение информации о балансе
+	void Balance();//РѕС‚РїСЂР°СЏР»РµРј Р·Р°РїСЂРѕСЃ РЅР° РїРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ Р±Р°Р»Р°РЅСЃРµ
 	void Stop();
 
 	virtual ~Client();

@@ -9,7 +9,7 @@ using namespace Collections::Generic;
 using namespace System;
 using namespace System::IO;
 
-ref struct BankClient
+ref struct BankClient//С‡С‚Рѕ С…СЂР°РЅСЏС‚ РєР»РёРµРЅС‚С‹
 {
 	String^ Name;
 	Double Balance;
@@ -19,27 +19,27 @@ ref struct BankClient
 };
 ref class ClientModel
 {
-	Socket^ socket;//само подключение
+	Socket^ socket;//СЃР°РјРѕ РїРѕРґРєР»СЋС‡РµРЅРёРµ
 	List<BankClient^>^Accounts;
-	List<ClientModel^>^ Clients;//cписок клиентов
+	List<ClientModel^>^ Clients;//cРїРёСЃРѕРє РєР»РёРµРЅС‚РѕРІ
 	BankClient^YourAccount;
 	bool Find = false;
 	bool active = false;
 
 	
 public:
-	ClientModel(Socket^ s, List<ClientModel^>^ clients, List<BankClient^>^Account);//конструктор моделей коиентов
+	ClientModel(Socket^ s, List<ClientModel^>^ clients, List<BankClient^>^Account);//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РјРѕРґРµР»РµР№ РєРѕРёРµРЅС‚РѕРІ
 private:
 	void Rewrite();
-	void ParseData(String^ req);//разбираем строку
+	void ParseData(String^ req);//СЂР°Р·Р±РёСЂР°РµРј СЃС‚СЂРѕРєСѓ
 	void SendMessage(String^ msg);
-	void SendData(String^ data);//отправляем строку
+	void SendData(String^ data);//РѕС‚РїСЂР°РІР»СЏРµРј СЃС‚СЂРѕРєСѓ
 	void Communicate();
 	void FindClient(String^Number, String^Pin);
-	void ShutDownClient(String^ data);//обрываем соединение
+	void ShutDownClient(String^ data);//РѕР±СЂС‹РІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ
 	void TransferMoney(String^Card, Double coin);
 
-	String^ ReceiveData();//получаям строку из полученных байтов
+	String^ ReceiveData();//РїРѕР»СѓС‡Р°СЏРј СЃС‚СЂРѕРєСѓ РёР· РїРѕР»СѓС‡РµРЅРЅС‹С… Р±Р°Р№С‚РѕРІ
 
 	void Stop();
 
@@ -57,11 +57,22 @@ private:
 	String^host= "127.0.0.1";
 
 	List<BankClient^>^ Accounts;
-	List<ClientModel^>^ Clients = gcnew List<ClientModel^>();//список клинетов
+	List<ClientModel^>^ Clients = gcnew List<ClientModel^>();//СЃРїРёСЃРѕРє РєР»РёРЅРµС‚РѕРІ
 public:
 	
-	void Parse(String^s);
-	void Rewrite();
+	void Parse(String^s);//СЂР°Р·Р±РѕСЂ СЃС‚СЂРѕРєРё СЃ txt
+	void Rewrite()
+	{
+		String^ fileName = "ServerBank.txt";
+		StreamWriter^ sw = gcnew StreamWriter(fileName);
+
+
+		for each(BankClient^ var in Accounts) {
+
+			sw->WriteLine(var->Name + ":" + Convert::ToString(var->Balance) + ":" + var->NumberCard + ":" + var->PinCode);
+		}
+
+	}
 	ServerBank();
 	virtual ~ServerBank();
 

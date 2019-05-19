@@ -26,19 +26,6 @@ void ServerBank::Parse(String ^ str)
 
 }
 
-void ServerBank::Rewrite()
-{
-	String^ fileName = "ServerBank.txt";
-	StreamWriter^ sw = gcnew StreamWriter(fileName);
-	
-
-	for each(BankClient^ var in Accounts) {
-
-		sw->WriteLine(var->Name + ":" + Convert::ToString(var->Balance) + ":" + var->NumberCard + ":" + var->PinCode);
-	}
-	
-}
-
 ServerBank::ServerBank()
 {
 	Socket^ sSocket = gcnew Socket(

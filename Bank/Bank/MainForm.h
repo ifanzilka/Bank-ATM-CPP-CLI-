@@ -11,7 +11,7 @@ namespace WindowsForms {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Сводка для MainForm
+	/// РЎРІРѕРґРєР° РґР»СЏ MainForm
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
@@ -24,8 +24,8 @@ namespace WindowsForms {
 			try
 			{
 				c = gcnew Client(IpAddress->Text);
-				c->OnEnterResult += gcnew LoginHandler(this, &MainForm::LoginResponse);//привязываем событие классу MainForm
-				c->OnMessageReceived += gcnew MessageHandler(this, &MainForm::MessageReceived);//событие
+				c->OnEnterResult += gcnew LoginHandler(this, &MainForm::LoginResponse);//РїСЂРёРІСЏР·С‹РІР°РµРј СЃРѕР±С‹С‚РёРµ РєР»Р°СЃСЃСѓ MainForm
+				c->OnMessageReceived += gcnew MessageHandler(this, &MainForm::MessageReceived);//СЃРѕР±С‹С‚РёРµ
 				connected = true;
 				BtnEnter->Enabled = true;
 				IpAddress->Enabled = false;
@@ -33,7 +33,7 @@ namespace WindowsForms {
 			}
 			catch (Exception^ex) {
 				
-				tbChat->Text += ex->Message + "\r\n";//если не вошли то в чат выводим ощибку
+				tbChat->Text += ex->Message + "\r\n";//РµСЃР»Рё РЅРµ РІРѕС€Р»Рё С‚Рѕ РІ С‡Р°С‚ РІС‹РІРѕРґРёРј РѕС‰РёР±РєСѓ
 				c = nullptr;
 			}
 		}
@@ -58,13 +58,13 @@ namespace WindowsForms {
 
 		
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~MainForm()
 		{
@@ -104,14 +104,14 @@ namespace WindowsForms {
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -157,7 +157,7 @@ namespace WindowsForms {
 			this->Btn->Name = L"Btn";
 			this->Btn->Size = System::Drawing::Size(130, 36);
 			this->Btn->TabIndex = 0;
-			this->Btn->Text = L"Подключиться";
+			this->Btn->Text = L"РџРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ";
 			this->Btn->UseVisualStyleBackColor = true;
 			this->Btn->Click += gcnew System::EventHandler(this, &MainForm::Btn_Click);
 			// 
@@ -176,7 +176,7 @@ namespace WindowsForms {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(110, 17);
 			this->label1->TabIndex = 2;
-			this->label1->Text = L"Адрес сервера:";
+			this->label1->Text = L"РђРґСЂРµСЃ СЃРµСЂРІРµСЂР°:";
 			// 
 			// txNumberCard
 			// 
@@ -201,7 +201,7 @@ namespace WindowsForms {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(99, 17);
 			this->label2->TabIndex = 5;
-			this->label2->Text = L"Номер карты:";
+			this->label2->Text = L"РќРѕРјРµСЂ РєР°СЂС‚С‹:";
 			// 
 			// label3
 			// 
@@ -219,7 +219,7 @@ namespace WindowsForms {
 			this->BtnEnter->Name = L"BtnEnter";
 			this->BtnEnter->Size = System::Drawing::Size(130, 60);
 			this->BtnEnter->TabIndex = 7;
-			this->BtnEnter->Text = L"Войти";
+			this->BtnEnter->Text = L"Р’РѕР№С‚Рё";
 			this->BtnEnter->UseVisualStyleBackColor = true;
 			this->BtnEnter->Click += gcnew System::EventHandler(this, &MainForm::BtnEnter_Click);
 			// 
@@ -229,7 +229,7 @@ namespace WindowsForms {
 			this->btnBalanc->Name = L"btnBalanc";
 			this->btnBalanc->Size = System::Drawing::Size(174, 83);
 			this->btnBalanc->TabIndex = 9;
-			this->btnBalanc->Text = L"Проверить Баланс";
+			this->btnBalanc->Text = L"РџСЂРѕРІРµСЂРёС‚СЊ Р‘Р°Р»Р°РЅСЃ";
 			this->btnBalanc->UseVisualStyleBackColor = true;
 			this->btnBalanc->Click += gcnew System::EventHandler(this, &MainForm::btnBalanc_Click);
 			// 
@@ -239,7 +239,7 @@ namespace WindowsForms {
 			this->btnRemove->Name = L"btnRemove";
 			this->btnRemove->Size = System::Drawing::Size(138, 39);
 			this->btnRemove->TabIndex = 10;
-			this->btnRemove->Text = L"Cнять";
+			this->btnRemove->Text = L"CРЅСЏС‚СЊ";
 			this->btnRemove->UseVisualStyleBackColor = true;
 			this->btnRemove->Click += gcnew System::EventHandler(this, &MainForm::btnRemove_Click);
 			// 
@@ -249,7 +249,7 @@ namespace WindowsForms {
 			this->btnInsert->Name = L"btnInsert";
 			this->btnInsert->Size = System::Drawing::Size(138, 39);
 			this->btnInsert->TabIndex = 11;
-			this->btnInsert->Text = L"Внести";
+			this->btnInsert->Text = L"Р’РЅРµСЃС‚Рё";
 			this->btnInsert->UseVisualStyleBackColor = true;
 			this->btnInsert->Click += gcnew System::EventHandler(this, &MainForm::btnInsert_Click);
 			// 
@@ -291,7 +291,7 @@ namespace WindowsForms {
 			this->btnTransfer->Name = L"btnTransfer";
 			this->btnTransfer->Size = System::Drawing::Size(119, 29);
 			this->btnTransfer->TabIndex = 16;
-			this->btnTransfer->Text = L"Перевести";
+			this->btnTransfer->Text = L"РџРµСЂРµРІРµСЃС‚Рё";
 			this->btnTransfer->UseVisualStyleBackColor = true;
 			this->btnTransfer->Click += gcnew System::EventHandler(this, &MainForm::btnTransfer_Click);
 			// 
@@ -302,7 +302,7 @@ namespace WindowsForms {
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(69, 17);
 			this->label6->TabIndex = 17;
-			this->label6->Text = L"на карту:";
+			this->label6->Text = L"РЅР° РєР°СЂС‚Сѓ:";
 			this->label6->Click += gcnew System::EventHandler(this, &MainForm::label6_Click);
 			// 
 			// textBox3
@@ -385,7 +385,7 @@ namespace WindowsForms {
 		}
 		void LoginResponse(bool result)
 		{
-			if (InvokeRequired)//так как элемент создан в другом потоке то создам и еще раз вызываем
+			if (InvokeRequired)//С‚Р°Рє РєР°Рє СЌР»РµРјРµРЅС‚ СЃРѕР·РґР°РЅ РІ РґСЂСѓРіРѕРј РїРѕС‚РѕРєРµ С‚Рѕ СЃРѕР·РґР°Рј Рё РµС‰Рµ СЂР°Р· РІС‹Р·С‹РІР°РµРј
 			{
 				Invoke(
 					gcnew LoginHandler(this, &MainForm::LoginResponse),
@@ -398,7 +398,7 @@ namespace WindowsForms {
 					txNumberCard->Enabled = false;
 					txPin->Enabled = false;
 					BtnEnter->Enabled = false;
-					tbChat->Text = "Вы успешно вошли!"+"\r\n";
+					tbChat->Text = "Р’С‹ СѓСЃРїРµС€РЅРѕ РІРѕС€Р»Рё!"+"\r\n";
 					tbChat->SelectionStart = tbChat->TextLength;
 					btnBalanc->Enabled = true;
 					btnRemove->Enabled = true;
@@ -412,12 +412,12 @@ namespace WindowsForms {
 					textBox3->Enabled = true;
 					textBox4->Enabled = true;
 
-					//btnSend->Text = "Отправить";
+					//btnSend->Text = "РћС‚РїСЂР°РІРёС‚СЊ";
 					enters = true;
 				}
 				else
 				{
-					tbChat->Text += "Неверный номер карты или пин" + "\r\n";
+					tbChat->Text += "РќРµРІРµСЂРЅС‹Р№ РЅРѕРјРµСЂ РєР°СЂС‚С‹ РёР»Рё РїРёРЅ" + "\r\n";
 					tbChat->SelectionStart = tbChat->TextLength;
 				}
 			}
@@ -433,7 +433,7 @@ namespace WindowsForms {
 			this->BtnBalance->Name = L"BtnBalnce";
 			this->BtnBalance->Size = System::Drawing::Size(130, 50);
 			this->BtnBalance->TabIndex = 10;
-			this->BtnBalance->Text = L"Проверить баланс";
+			this->BtnBalance->Text = L"РџСЂРѕРІРµСЂРёС‚СЊ Р±Р°Р»Р°РЅСЃ";
 			this->BtnBalance->UseVisualStyleBackColor = true;
 			this->BtnBalance->Click += gcnew System::EventHandler(this, &MainForm::BtnEnter_Click);
 			
@@ -510,7 +510,7 @@ private: System::Void btnBalanc_Click(System::Object^  sender, System::EventArgs
 }
 private: System::Void MainForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 
-	c->Stop();//обрываем подкючение
+	c->Stop();//РѕР±СЂС‹РІР°РµРј РїРѕРґРєСЋС‡РµРЅРёРµ
 
 }
 private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {

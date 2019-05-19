@@ -2,12 +2,12 @@
 
 void Client::SendData(String ^ data)
 {
-	if (!socket) return;//если есть подключение
+	if (!socket) return;//РµСЃР»Рё РµСЃС‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёРµ
 	try {
 		if (!data || data->Trim()->Equals("")) data = "\0";
-		array<Byte>^ b = Encoding::UTF8->GetBytes(data);//строки переводим в байты
+		array<Byte>^ b = Encoding::UTF8->GetBytes(data);//СЃС‚СЂРѕРєРё РїРµСЂРµРІРѕРґРёРј РІ Р±Р°Р№С‚С‹
 		Console::WriteLine("Sending: {0}", data);
-		socket->Send(b);//отправляем байты
+		socket->Send(b);//РѕС‚РїСЂР°РІР»СЏРµРј Р±Р°Р№С‚С‹
 		Console::WriteLine("Sent");
 	}
 	catch (...)
@@ -21,8 +21,8 @@ void Client::Communicate()
 	if (!socket) return;
 	Console::WriteLine("Starting communication");
 	while (active) {
-		Console::WriteLine("Receiving response...");//получение ответа
-		auto req = ReceiveData();//получение сообщения
+		Console::WriteLine("Receiving response...");//РїРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р°
+		auto req = ReceiveData();//РїРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ
 		ParseCommand(req);
 	}
 }
@@ -31,15 +31,15 @@ void Client::ParseCommand(String ^ req)
 {
 	if (!req || req->Trim()->Equals("")) return;
 	array<String^>^ sep = { ":" };
-	array<String^>^ parts = req->Split(sep, 2, StringSplitOptions::None);//разбираем полученную строку на две строки и закидываем в массив (разделяем с ':')
-	if (parts[0]->ToUpper()->Equals("ENTERS"))//если первый элемент логин 
+	array<String^>^ parts = req->Split(sep, 2, StringSplitOptions::None);//СЂР°Р·Р±РёСЂР°РµРј РїРѕР»СѓС‡РµРЅРЅСѓСЋ СЃС‚СЂРѕРєСѓ РЅР° РґРІРµ СЃС‚СЂРѕРєРё Рё Р·Р°РєРёРґС‹РІР°РµРј РІ РјР°СЃСЃРёРІ (СЂР°Р·РґРµР»СЏРµРј СЃ ':')
+	if (parts[0]->ToUpper()->Equals("ENTERS"))//РµСЃР»Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ Р»РѕРіРёРЅ 
 	{
 		OnEnterResult(parts[1]->Contains("OK"));
 	}
-	else if (parts[0]->ToUpper()->Equals("BALANCE"))//если первый элемент сообщение
+	else if (parts[0]->ToUpper()->Equals("BALANCE"))//РµСЃР»Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРѕРѕР±С‰РµРЅРёРµ
 	{
 		
-			OnMessageReceived("Текущий остаток:"+parts[1]);
+			OnMessageReceived("РўРµРєСѓС‰РёР№ РѕСЃС‚Р°С‚РѕРє:"+parts[1]);
 		
 	}
 	else if (parts[0]->ToUpper()->Equals("MESSAGE"))
@@ -53,7 +53,7 @@ String ^ Client::ReceiveData()
 	if (!socket) return "";
 	String^ res = "";
 	try {
-		auto b = gcnew array<Byte>(65536);//автоматически определяем тип
+		auto b = gcnew array<Byte>(65536);//Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РѕРїСЂРµРґРµР»СЏРµРј С‚РёРї
 		int bc = socket->Receive(b, 0, 65535, SocketFlags::None);
 		res = Encoding::UTF8->GetString(b, 0, bc);
 		Console::WriteLine("Response: {0}", res);
@@ -73,11 +73,11 @@ Client::Client(String ^ serverHost)
 	);
 	this->serverHost = serverHost;
 	socket->Connect(this->serverHost, port);
-	ThreadStart^ th = gcnew ThreadStart(this, &Client::Communicate);//выделяем поток
+	ThreadStart^ th = gcnew ThreadStart(this, &Client::Communicate);//РІС‹РґРµР»СЏРµРј РїРѕС‚РѕРє
 	Thread^ t = gcnew Thread(th);
 	active = true;
-	t->Start();//запускаем поток
-	if (!socket->Connected)//если не соединились
+	t->Start();//Р·Р°РїСѓСЃРєР°РµРј РїРѕС‚РѕРє
+	if (!socket->Connected)//РµСЃР»Рё РЅРµ СЃРѕРµРґРёРЅРёР»РёСЃСЊ
 	{
 		socket = nullptr;
 		throw gcnew Exception("Error Connect");
@@ -123,7 +123,7 @@ void Client::Stop()
 		active = false;
 		if (socket)
 		{
-			socket->Shutdown(SocketShutdown::Both);//закрываем соединение
+			socket->Shutdown(SocketShutdown::Both);//Р·Р°РєСЂС‹РІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ
 			socket->Disconnect(false);
 			socket->Close();
 		}
